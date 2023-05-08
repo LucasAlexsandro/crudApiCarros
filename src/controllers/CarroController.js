@@ -62,6 +62,56 @@ module.exports = {
     }
 
     res.json(json);
-  }
+  },
 
+  // Alterar
+  alterar: async(req, res) => {
+    let json = {
+      error: "",
+      result: {},
+    };
+
+    let codigo = req.params.codigo;
+    let modelo = req.body.modelo;
+    let placa  = req.body.placa;
+
+    if(modelo && placa && codigo){
+      await CarroService.alterar(codigo, modelo, placa);
+      json.result = {
+        codigo,
+        modelo,
+        placa
+      };
+    }
+
+
+    else {
+      json.error = "Campos não enviados!";
+    }
+
+    res.json(json);
+  },
+
+  // Deletar
+  deletar: async(req, res) => {
+    let json = {
+      error: "",
+      result: {},
+    };
+
+    let codigo = req.params.codigo;
+
+    if(codigo){
+      await CarroService.deletar(codigo);
+      json.result = {
+        codigo,
+      };
+    }
+
+    else {
+      json.error = "Campos não enviados!";
+    }
+
+    res.json(json);
+  },
 };

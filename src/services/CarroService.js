@@ -49,4 +49,38 @@ module.exports = {
       );
     });
   },
+
+  // Alterando veiculo no banco
+  alterar: (codigo, modelo, placa) => {
+    return new Promise((aceito, rejeitado) => {
+      db.query(
+        "UPDATE carros SET modelo = ?, placa = ? WHERE codigo = ?",
+        [modelo, placa, codigo],
+        (error, results) => {
+          if (error) {
+            rejeitado(error);
+            return;
+          }
+          aceito(results);
+        }
+      );
+    });
+  },
+
+  // Deletando veiculo no banco
+  deletar: (codigo) => {
+    return new Promise((aceito, rejeitado) => {
+      db.query(
+        "DELETE from carros WHERE codigo = ?",
+        [codigo],
+        (error, results) => {
+          if (error) {
+            rejeitado(error);
+            return;
+          }
+          aceito(results);
+        }
+      );
+    });
+  },
 };
